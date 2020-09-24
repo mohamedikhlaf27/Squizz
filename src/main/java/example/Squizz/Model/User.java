@@ -13,4 +13,6 @@ public @Data class User implements Serializable {
     private int id;
     private String username;
     private String email;
+    private String password;
+    private boolean function;
 }
