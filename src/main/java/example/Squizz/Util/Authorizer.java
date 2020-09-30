@@ -36,8 +36,8 @@ public class Authorizer {
     // Hash password with salt
     public String HashPassword(String password, String salt) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        String test = password + salt;
-        byte[] encodedHash = digest.digest(test.getBytes(StandardCharsets.UTF_8));
+        String hashing = password + salt;
+        byte[] encodedHash = digest.digest(hashing.getBytes(StandardCharsets.UTF_8));
 
         return Base64.getEncoder().encodeToString(encodedHash);
     }

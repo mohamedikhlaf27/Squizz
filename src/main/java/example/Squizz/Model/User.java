@@ -1,7 +1,6 @@
 package example.Squizz.Model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -23,6 +22,5 @@ public @Data class User {
         this.password = password;
         this.function = function;
         this.salt = salt;
-
     }
 }
