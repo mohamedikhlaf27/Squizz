@@ -16,9 +16,13 @@ public @Data class User {
     private String salt;
 
     public User(){}
-    public User(String email, String password, String salt) {
+
+    public User(String email, String username, String password, boolean function, String salt) {
         this.email = email;
+        this.userName = username;
         this.password = password;
+        this.function = function;
         this.salt = salt;
+
     }
 }

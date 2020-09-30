@@ -1,4 +1,4 @@
-package example.Squizz.Model;
+package example.Squizz.Util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
