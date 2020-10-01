@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 
+
 @Controller  // This means that this class is a Controller
 @RequestMapping("/user") // This means URL's start with /api (after Application path)
 @CrossOrigin(origins = "http://localhost:3000")

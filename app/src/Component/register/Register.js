@@ -6,7 +6,6 @@ class Register extends Component {
         event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
-        const functie = event.target.function.value;
 
         let formData = new URLSearchParams();
         formData.append('email', email)
@@ -39,8 +38,8 @@ class Register extends Component {
                     <input placeholder="password" type="text" name="password" id="password"></input>
                 </div>
                 <div>
-                    <label htmlFor="function">Function</label>
-                    <input placeholder="function" type="checkbox" name="function" id="function"></input>
+                    <label hrmlFor="function">Function</label>
+                    <input type="checkbox"name="password" id="password"></input>
                 </div>
                 <div>
                     <button type="submit">Register</button>
