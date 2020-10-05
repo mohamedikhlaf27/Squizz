@@ -52,7 +52,7 @@ public class UserController {
         User user = new User(email, username, hashedPassword, function, salt);
         userRepository.save(user);
 
-        return true;
+          return true;
     }
 
     //login

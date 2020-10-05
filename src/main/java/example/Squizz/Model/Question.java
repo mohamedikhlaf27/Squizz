@@ -2,6 +2,7 @@ package example.Squizz.Model;
 
 import lombok.Data;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public @Data class Question {
@@ -11,7 +12,7 @@ public @Data class Question {
     private int quizId;
     private String question;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="choisesId")
-    private Choises choises;
+    @ManyToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+    //@JoinColumn(name="choisesId")
+    private List<Choises> choises;
 }

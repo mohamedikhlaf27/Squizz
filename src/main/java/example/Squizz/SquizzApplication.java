@@ -1,5 +1,6 @@
 package example.Squizz;
 
+import example.Squizz.Model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

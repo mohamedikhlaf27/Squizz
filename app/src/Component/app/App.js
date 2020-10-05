@@ -14,21 +14,20 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Router>
-                    <Navbar/>
-                    <div className="content">
-                        <Switch>
-                            <Route path="/" exact component={Home} />
-                            <Route path="/login" exact component={Login} />
-                            <Route path="/register" exact component={Register} />
-                        </Switch>
-                    </div>
-                </Router>
+                {/*<Router>*/}
+                {/*    <Navbar/>*/}
+                {/*    <div className="content">*/}
+                {/*        <Switch>*/}
+                {/*            <Route path="/" exact component={Home} />*/}
+                {/*            <Route path="/login" exact component={Login} />*/}
+                {/*            <Route path="/register" exact component={Register} />*/}
+                {/*        </Switch>*/}
+                {/*    </div>*/}
+                {/*</Router>*/}
+                <Login/>
             </div>
         );
     }
 }
-
-
 
 export default App;
