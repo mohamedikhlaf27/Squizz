@@ -1,8 +1,8 @@
 package example.Squizz.Controller;
 
-import example.Squizz.Interface.UserRepository;
+import example.Squizz.Interface.PersonRepository;
 import example.Squizz.Util.Authorizer;
-import example.Squizz.Model.User;
+import example.Squizz.Model.Person;
 import example.Squizz.Util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,23 +12,23 @@ import java.security.NoSuchAlgorithmException;
 
 
 @Controller  // This means that this class is a Controller
-@RequestMapping("/user") // This means URL's start with /api (after Application path)
+@RequestMapping("/person") // This means URL's start with /api (after Application path)
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     @Autowired //The @utowired annotation allows you to skip configurations elsewhere
                //of what to inject and just does it for you.
-    private UserRepository userRepository;
+    private PersonRepository personRepository;
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
+    public @ResponseBody Iterable<Person> getAllUsers() {
         // This returns a JSON or XML with the users
-        return userRepository.findAll();
+        return personRepository.findAll();
     }
 
     //register
     @PostMapping("/register")
-    public @ResponseBody Boolean register(@RequestParam String email, String username, String password, boolean function) throws NoSuchAlgorithmException {
+    public @ResponseBody Boolean register(@RequestParam String email, String username, String password, boolean role) throws NoSuchAlgorithmException {
         Util util = new Util();
 
         // Check if user data is valid
@@ -37,7 +37,7 @@ public class UserController {
         }
 
         // Check if email exist
-        User dBAccount = userRepository.findUserByEmail(email);
+        Person dBAccount = personRepository.findPersonByEmail(email);
 
         if(dBAccount != null) {
             return false;
@@ -49,8 +49,8 @@ public class UserController {
         String hashedPassword = auth.HashPassword(password, salt);
 
         // Save user to database
-        User user = new User(email, username, hashedPassword, function, salt);
-        userRepository.save(user);
+        Person user = new Person(email, username, hashedPassword, role, salt);
+        personRepository.save(user);
 
           return true;
     }
@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("/login")
     public @ResponseBody Boolean login(@RequestParam String email, String password) throws NoSuchAlgorithmException {
         // Get user's hash by email from database
-        User user = userRepository.findUserByEmail(email);
+        Person user = personRepository.findPersonByEmail(email);
         String databaseHash = user.getPassword();
 
         // Hash + salt password

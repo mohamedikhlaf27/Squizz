@@ -5,11 +5,10 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-public @Data class Choises {
+public @Data class Choices {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int choisesId;
-    private int questionId;
+    private int choicesId;
     private String choice;
     private rightChoice rightChoice;
 }

@@ -9,10 +9,8 @@ public @Data class Question {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int questionId;
-    private int quizId;
-    private String question;
+    private String title;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
-    //@JoinColumn(name="choisesId")
-    private List<Choises> choises;
+    @OneToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
+    private List<Choices> choices;
 }
