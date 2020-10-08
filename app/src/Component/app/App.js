@@ -15,7 +15,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Router>
-                    <Navbar/>
+                    <Login/>
                     {/*<div className="content">*/}
                     {/*    <Switch>*/}
                     {/*        <Route path="/" exact component={Home} />*/}

@@ -15,7 +15,7 @@ public @Data class Person {
     private boolean role;
     private String salt;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)//fetching strategy to load data.
     private List<PersonScore> userScores;
 
     public Person(){}

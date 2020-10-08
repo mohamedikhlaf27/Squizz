@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Login.css';
 import {Button, Label, Input} from 'reactstrap';
-import Background from '../img/MicrosoftTeams-image.png';
+import Background from "../img/MicrosoftTeams-image.png";
 
 class Login extends Component {
 
@@ -31,7 +31,6 @@ class Login extends Component {
 
     render() {
         return (
-
             <form class="form-signin" onSubmit={this.handleSubmit}>
                 <div className="container">
                     <div className="card card-container">
