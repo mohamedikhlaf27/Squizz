@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import './Register.css';
+import {Button, Input, Label, FormGroup} from "reactstrap";
+import {Link} from "react-router-dom";
 
 class Register extends Component {
 
@@ -29,21 +31,42 @@ class Register extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input placeholder="email" type="text" name="email" id="email"></input>
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input placeholder="password" type="text" name="password" id="password"></input>
-                </div>
-                <div>
-                    <label hrmlFor="function">Function</label>
-                    <input type="checkbox"name="password" id="password"></input>
-                </div>
-                <div>
-                    <button type="submit">Register</button>
+            <form className="form-signup" onSubmit={this.handleSubmit}>
+                <div className="container">
+                    <div className="card card-container">
+                        <div className= "pb-2"><
+                            h4 id = "Title">Sign up</h4>
+                        </div>
+                        <Input type="email" id="inputEmail" className="form-control" placeholder="Email address"
+                               required autoFocus> </Input>
+                        <Input type="password" id="inputPassword" className="form-control" placeholder="Password" required> </Input>
+
+                        <div>
+                            <Label>
+                                Function:
+                            </Label>
+                            <FormGroup check>
+                                <Label check>
+                                    <Input type="radio" name="radio1" />{' '}
+                                    Teacher
+                                </Label>
+                            </FormGroup>
+                            <FormGroup check className="pb-2">
+                                <Label check>
+                                    <Input type="radio" name="radio1" />{' '}
+                                    Student
+                                </Label>
+                            </FormGroup>
+                        </div>
+
+                        <Button className="btn btn-lg btn-primary btn-block btn-signup" type="submit">Sign up
+                        </Button>
+                        <div>
+                            <p>Already have a account?
+                                <a className="login"> <Link to="/login"> Sign in </Link></a>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </form>
         )

@@ -29,8 +29,8 @@
  * Form styles
  */
 
-.form-signin #inputEmail,
-.form-signin #inputPassword {
+.form-signin #email,
+.form-signin #password {
     direction: ltr;
     height: 44px;
     font-size: 16px;
@@ -69,10 +69,4 @@
 
 .register {
     color: rgb(104, 145, 162);
-}
-
-.forgot-password:hover,
-.forgot-password:active,
-.forgot-password:focus{
-    color: rgb(12, 97, 33);
 }

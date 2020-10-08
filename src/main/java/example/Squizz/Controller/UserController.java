@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -28,19 +29,27 @@ public class UserController {
 
     //register
     @PostMapping("/register")
-    public @ResponseBody Boolean register(@RequestParam String email, String username, String password, boolean role) throws NoSuchAlgorithmException {
+    public @ResponseBody String register(@RequestParam String email, String username, @RequestParam String password, boolean role, HttpServletResponse response) throws NoSuchAlgorithmException {
         Util util = new Util();
 
         // Check if user data is valid
-        if(!util.EmailValidator(email) || !util.PasswordValidator(password)) {
-            return false;
+        if(!util.EmailValidator(email)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return "{\"message\":\"Email is not correct.\"}";
+        }
+
+        if(!util.PasswordValidator(password)){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return "{\"message\":\"Password must contain at least one digit, special character, uppercase, " +
+                    "lowercase and be minimun of 8 characters.\"}";
         }
 
         // Check if email exist
         Person dBAccount = personRepository.findPersonByEmail(email);
 
         if(dBAccount != null) {
-            return false;
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return "{\"message\":\"This email in already in use.\"}";
         }
 
         // Hash + salt password
@@ -52,21 +61,34 @@ public class UserController {
         Person user = new Person(email, username, hashedPassword, role, salt);
         personRepository.save(user);
 
-          return true;
+          return "{\"message\":\"Registration succeeded\"}";
     }
 
     //login
     @PostMapping("/login")
-    public @ResponseBody Boolean login(@RequestParam String email, String password) throws NoSuchAlgorithmException {
+    public @ResponseBody String login(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws NoSuchAlgorithmException {
+        String message = "";
         // Get user's hash by email from database
         Person user = personRepository.findPersonByEmail(email);
+        if(user == null){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return "{\"message\":\"Email or password is incorrect.\"}";
+        }
         String databaseHash = user.getPassword();
 
         // Hash + salt password
         Authorizer auth = new Authorizer();
         String hashedPassword = auth.HashPassword(password, user.getSalt());
 
-        // Check if hashed password and user password are the same
-        return auth.ValidatePassword(databaseHash, hashedPassword);
+        boolean loginCheck = auth.ValidatePassword(databaseHash, hashedPassword);
+
+        if (loginCheck) {
+//            final String jwt = jwtTokenUtil.generateToken(account);
+            message =  "{\"message\":\"Login succeeded.\"}";
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            message = "{\"message\":\"Email or password is incorrect.\"}";
+        }
+        return message;
     }
 }

@@ -1,12 +1,26 @@
 import React, {Component} from 'react';
 import './Login.css';
 import {Button, Label, Input} from 'reactstrap';
+import {Link} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Background from "../img/MicrosoftTeams-image.png";
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            canLogin: true,
+        }
+        this.onLogin = this.onLogin.bind(this);
+    }
 
-    handleSubmit(event) {
+    onLogin(event) {
+
         event.preventDefault();
+        this.setState({
+            canLogin: false
+        });
+
         const email = event.target.email.value;
         const password = event.target.password.value;
 
@@ -14,8 +28,7 @@ class Login extends Component {
         formData.append('email', email)
         formData.append('password', password);
 
-
-        fetch("http://localhost:8080/user/login", {
+        fetch("http://localhost:8080/person/login", {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -23,39 +36,81 @@ class Login extends Component {
             },
             body: formData
         })
-            .then(result => result.json())
+            .then(result => result.status === 200 ? result.json() : Promise.reject(result))
             .then(data => {
-                console.log(data)
-            });
+                if (data) {
+                    this.props.history.push("/register");
+                    localStorage.setItem('squizz-loggedIn', true);
+                    this.setState({
+                        loggedIn: true,
+                        message: data.message
+                    });
+                }
+            })
+            .catch(result => result.json())
+            .then(data => {
+                if (data) {
+                    this.setState({
+                        loggedIn: false,
+                        canLogin: true,
+                        message: data.message
+                    });
+                }
+            })
     }
 
     render() {
-        return (
-            <form class="form-signin" onSubmit={this.handleSubmit}>
+        return(
+            <form className="form-signin" onSubmit={this.onLogin}>
                 <div className="container">
                     <div className="card card-container">
-                        <div className= "pb-2"><
-                            h4 id = "Title">Sign in</h4>
+                        <div className="pb-2"><
+                            h4 id="Title">Sign in</h4>
                         </div>
-                            <Input type="email" id="inputEmail" className="form-control" placeholder="Email address"
-                                   required autoFocus> </Input>
-                            <Input type="password" id="inputPassword" className="form-control" placeholder="Password" required> </Input>
-                            <Button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in
-                            </Button>
+                        <Input type="email" id="email" className="form-control" placeholder="Email address"
+                               required autoFocus> </Input>
+                        <Input type="password" id="password" className="form-control" placeholder="Password"
+                               required> </Input>
+
+                        <div>{this.state.message}</div>
+
+                        <Button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in </Button>
                         <div>
-                            <p>Don't have a account yet? <a href="#" className="register">
-                                Register.
-                            </a>
+                            <p>Don't have a account yet?
+                                <a className="register"><Link to="/register"> Register.</Link></a>
                             </p>
-
                         </div>
-
                     </div>
                 </div>
             </form>
-
         )
     }
 }
 
-export default Login;
+export default withRouter(Login);
+
+// handleSubmit(event) {
+//     event.preventDefault();
+//     const email = event.target.email.value;
+//     const password = event.target.password.value;
+//     console.log(email, password);
+//
+//     let formData = new URLSearchParams();
+//     formData.append('email', email)
+//     formData.append('password', password);
+//
+//
+//     fetch("http://localhost:8080/person/login", {
+//         method: 'POST',
+//         mode: 'cors',
+//         headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//         },
+//         body: formData
+//     })
+//         .then(result => result.json())
+//         .then(data => {
+//             console.log(data)
+//
+//         });
+// }
