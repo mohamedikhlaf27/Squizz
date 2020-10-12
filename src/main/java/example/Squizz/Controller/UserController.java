@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
@@ -39,6 +43,16 @@ public class UserController {
         Util util = new Util();
         HashMap<String, Object> data = new HashMap<>();
 
+
+        // Check if email exist
+        Person dBAccount = personRepository.findPersonByEmail(email);
+
+        if(dBAccount != null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            data.put("message", "This email in already in use.");
+            return new JSONObject(data).toString();
+        }
+
         // Check if user data is valid
         if(!util.EmailValidator(email)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -53,14 +67,7 @@ public class UserController {
             return new JSONObject(data).toString();
         }
 
-        // Check if email exist
-        Person dBAccount = personRepository.findPersonByEmail(email);
 
-        if(dBAccount != null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "This email in already in use.");
-            return new JSONObject(data).toString();
-        }
 
         // Hash + salt password
         Authorizer auth = new Authorizer();

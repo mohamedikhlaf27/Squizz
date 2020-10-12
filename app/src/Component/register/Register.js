@@ -89,7 +89,7 @@ class Register extends Component {
                             </Label>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="radio" id="radio" name="radio" value="true"/>{' '}
+                                    <Input type="radio" id="radio" name="radio" value="true" checked="true"/>{' '}
                                     Teacher
                                 </Label>
                             </FormGroup>

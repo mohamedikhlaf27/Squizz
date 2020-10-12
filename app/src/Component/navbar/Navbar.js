@@ -11,6 +11,10 @@ import {
     NavLink,
 } from 'reactstrap';
 
+const handleLogout = history => () => {
+    localStorage.removeItem('loggedIn');
+    history.push('/login');
+}
 
 class navbar extends Component {
     constructor(props) {
@@ -22,11 +26,13 @@ class navbar extends Component {
             showNavbar: false
         };
     }
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen
         });
     }
+
     render() {
         return (
             <div>
@@ -43,6 +49,10 @@ class navbar extends Component {
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/login">Sign in</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/login" onClick={handleLogout(history)}>
+                                    Sign out</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

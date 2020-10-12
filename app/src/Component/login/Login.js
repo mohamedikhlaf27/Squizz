@@ -21,6 +21,7 @@ class Login extends Component {
 
         const email = event.target.email.value;
         const password = event.target.password.value;
+        const { history } = this.props;
 
         let formData = new URLSearchParams();
         formData.append('email', email)
@@ -35,9 +36,9 @@ class Login extends Component {
             body: formData
         })
             .then(result => {
-                if (result.status === 200) {
-                    return result.json();
-                } else {
+                if(result.status === 200){
+                    return result.json()
+                }else{
                     return Promise.reject(result)
                 }
             })
@@ -49,7 +50,7 @@ class Login extends Component {
                         loggedIn: true,
                         message: data.message
                     });
-                    this.props.history.push("/");
+                    history.push("/");
                 }
             })
             .catch(result => result.json())

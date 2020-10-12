@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 import './App.css';
 
 import Register from '../register/Register';
@@ -20,6 +21,7 @@ class App extends Component {
         const loggedIn = localStorage.getItem('Squizz-loggedIn');
         this.setState({loggedIn: loggedIn, canLogin: false})
     }
+
 
     render() {
         return (

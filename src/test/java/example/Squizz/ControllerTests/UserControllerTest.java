@@ -72,6 +72,5 @@ public class UserControllerTest {
 
         //Assert
         Assert.isTrue(result.getResponse().getContentAsString().equals(jsonObject.toString()), "Registration test");
-
     }
 }
