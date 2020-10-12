@@ -2,20 +2,41 @@ import React, {Component} from 'react'
 import './Register.css';
 import {Button, Input, Label, FormGroup} from "reactstrap";
 import {Link} from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
 
 class Register extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            canSubmit: true,
+            registered: false,
+            message: ""
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     handleSubmit(event) {
         event.preventDefault();
+        this.setState({
+            canSubmit: false
+        });
+
         const email = event.target.email.value;
         const password = event.target.password.value;
+        const username = event.target.userName.value;
+        const role = document.querySelector('input[name="radio"]:checked').value;
 
         let formData = new URLSearchParams();
         formData.append('email', email)
         formData.append('password', password);
+        formData.append('username', username);
+        formData.append('role', role);
 
+        console.log(email, password, username, role);
 
-        fetch("http://localhost:8080/user/register", {
+        fetch("http://localhost:8080/person/register", {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -23,10 +44,30 @@ class Register extends Component {
             },
             body: formData
         })
-            .then(result => result.json())
-            .then(data => {
-                console.log(data)
-            });
+        .then(result => {
+            if (result.status === 200) {
+                return result.json();
+            } else {
+                return Promise.reject(result)
+            }
+        })
+        .then(data => {
+            if (data) {
+                this.setState({
+                    canSubmit: true,
+                    message: data.message
+                });
+                this.props.history.push("/login");
+            }
+        })
+        .catch(result => result.json())
+        .then(data => {
+            if (data) {
+                this.setState({
+                    message: data.message
+                });
+            }
+        })
     }
 
     render() {
@@ -37,9 +78,10 @@ class Register extends Component {
                         <div className= "pb-2"><
                             h4 id = "Title">Sign up</h4>
                         </div>
-                        <Input type="email" id="inputEmail" className="form-control" placeholder="Email address"
+                        <Input type="email" id="email" className="form-control" placeholder="Email address"
                                required autoFocus> </Input>
-                        <Input type="password" id="inputPassword" className="form-control" placeholder="Password" required> </Input>
+                        <Input type="password" id="password" className="form-control" placeholder="Password" required> </Input>
+                        <Input type="text" id="userName" className="form-control" placeholder="Username" required> </Input>
 
                         <div>
                             <Label>
@@ -47,21 +89,23 @@ class Register extends Component {
                             </Label>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="radio" name="radio1" />{' '}
+                                    <Input type="radio" id="radio" name="radio" value="true"/>{' '}
                                     Teacher
                                 </Label>
                             </FormGroup>
                             <FormGroup check className="pb-2">
                                 <Label check>
-                                    <Input type="radio" name="radio1" />{' '}
+                                    <Input type="radio" id="radio" name="radio" value="false"/>{' '}
                                     Student
                                 </Label>
                             </FormGroup>
                         </div>
 
+                        <div>{this.state.message}</div>
+
                         <Button className="btn btn-lg btn-primary btn-block btn-signup" type="submit">Sign up
                         </Button>
-                        <div>
+                        <div className={this.state.registered ? "registered" : "register-failed"}>
                             <p>Already have a account?
                                 <a className="login"> <Link to="/login"> Sign in </Link></a>
                             </p>
@@ -73,4 +117,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default withRouter(Register);

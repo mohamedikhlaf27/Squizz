@@ -4,7 +4,11 @@ import Navbar from "../navbar/Navbar";
 
 class Home extends Component {
     render() {
-        return <Navbar/>
+        // return
+        return <div>
+            <Navbar/>
+            <h1>Home</h1>
+        </div>
     }
 }
 

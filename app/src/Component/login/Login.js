@@ -3,7 +3,6 @@ import './Login.css';
 import {Button, Label, Input} from 'reactstrap';
 import {Link} from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import Background from "../img/MicrosoftTeams-image.png";
 
 class Login extends Component {
     constructor(props) {
@@ -15,7 +14,6 @@ class Login extends Component {
     }
 
     onLogin(event) {
-
         event.preventDefault();
         this.setState({
             canLogin: false
@@ -36,20 +34,28 @@ class Login extends Component {
             },
             body: formData
         })
-            .then(result => result.status === 200 ? result.json() : Promise.reject(result))
+            .then(result => {
+                if (result.status === 200) {
+                    return result.json();
+                } else {
+                    return Promise.reject(result)
+                }
+            })
             .then(data => {
                 if (data) {
-                    this.props.history.push("/register");
-                    localStorage.setItem('squizz-loggedIn', true);
+                    console.log(data);
+                    localStorage.setItem('Squizz-loggedIn', true);
                     this.setState({
                         loggedIn: true,
                         message: data.message
                     });
+                    this.props.history.push("/");
                 }
             })
             .catch(result => result.json())
             .then(data => {
                 if (data) {
+                    localStorage.setItem('Squizz-loggedIn', false);
                     this.setState({
                         loggedIn: false,
                         canLogin: true,
@@ -88,29 +94,3 @@ class Login extends Component {
 }
 
 export default withRouter(Login);
-
-// handleSubmit(event) {
-//     event.preventDefault();
-//     const email = event.target.email.value;
-//     const password = event.target.password.value;
-//     console.log(email, password);
-//
-//     let formData = new URLSearchParams();
-//     formData.append('email', email)
-//     formData.append('password', password);
-//
-//
-//     fetch("http://localhost:8080/person/login", {
-//         method: 'POST',
-//         mode: 'cors',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//         },
-//         body: formData
-//     })
-//         .then(result => result.json())
-//         .then(data => {
-//             console.log(data)
-//
-//         });
-// }
