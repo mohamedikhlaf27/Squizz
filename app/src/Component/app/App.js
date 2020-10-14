@@ -22,18 +22,17 @@ class App extends Component {
         this.setState({loggedIn: loggedIn, canLogin: false})
     }
 
-
     render() {
         return (
             <div className="App">
                 <Router>
-                    <div className="content" loginStatus={this.state.loggedIn}>
+                    <div className="content" loginstatus={this.state.loggedIn}>
                         <Switch>
                             <Route path="/" exact component={Home} />
-                            {/*<Route path="/login" exact component={Login}/>*/}
-                            <Route path="/login" exact>
-                                <Login  onResult={loginData => {this.setState({loginData})}} />
-                            </Route>
+                            <Route path="/login" exact component={Login}/>
+                            {/*<Route path="/login" exact>*/}
+                            {/*    <Login  onResult={loginData => {this.setState({loginData})}} />*/}
+                            {/*</Route>*/}
                             <Route path="/register" exact component={Register} />
                         </Switch>
                     </div>

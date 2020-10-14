@@ -62,6 +62,7 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("email", "eeee@example.com")
                 .param("password", "Test1234!")
+                .param("repeatPassword", "Test1234!")
                 .param("username", "test")
                 .param("role", String.valueOf(true));
         MvcResult result = mvc.perform(request).andReturn();

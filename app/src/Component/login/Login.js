@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 class Login extends Component {
+    handleChange;
     constructor(props) {
         super(props);
         this.state = {
@@ -16,7 +17,7 @@ class Login extends Component {
     onLogin(event) {
         event.preventDefault();
         this.setState({
-            canLogin: false
+            canLogin: false,
         });
 
         const email = event.target.email.value;
@@ -84,7 +85,7 @@ class Login extends Component {
                         <Button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in </Button>
                         <div>
                             <p>Don't have a account yet?
-                                <a className="register"><Link to="/register"> Register.</Link></a>
+                                <a className="register" href={'/register'}> Register.</a>
                             </p>
                         </div>
                     </div>

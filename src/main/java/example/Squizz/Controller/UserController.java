@@ -39,10 +39,11 @@ public class UserController {
 
     //register
     @PostMapping("/register")
-    public @ResponseBody String register(@RequestParam String email,  @RequestParam String username, @RequestParam String password, boolean role, HttpServletResponse response) throws NoSuchAlgorithmException {
+    public @ResponseBody String register(@RequestParam String email,  @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword,
+                                         boolean role, HttpServletResponse response) throws NoSuchAlgorithmException {
+
         Util util = new Util();
         HashMap<String, Object> data = new HashMap<>();
-
 
         // Check if email exist
         Person dBAccount = personRepository.findPersonByEmail(email);
@@ -60,14 +61,18 @@ public class UserController {
             return new JSONObject(data).toString();
         }
 
+        if(!repeatPassword.equals(password)){
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            data.put("message", "Password doesn't match.");
+            return new JSONObject(data).toString();
+        }
+
         if(!util.PasswordValidator(password)){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             data.put("message", "Password must contain at least one digit, special character, uppercase, " +
                     "lowercase and be minimun of 8 characters.");
             return new JSONObject(data).toString();
         }
-
-
 
         // Hash + salt password
         Authorizer auth = new Authorizer();

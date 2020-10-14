@@ -11,20 +11,19 @@ import {
     NavLink,
 } from 'reactstrap';
 
-const handleLogout = history => () => {
-    localStorage.removeItem('loggedIn');
-    history.push('/login');
-}
-
 class navbar extends Component {
     constructor(props) {
         super(props);
-
-        this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
-            showNavbar: false
+            showNavbar: false,
+            loggedIn: localStorage.getItem('Squizz-loggedIn')
         };
+        this.toggle = this.toggle.bind(this);
+    }
+
+    logout() {
+        localStorage.removeItem('Squizz-loggedIn')
     }
 
     toggle() {
@@ -34,6 +33,9 @@ class navbar extends Component {
     }
 
     render() {
+
+        const {loggedIn} = this.state;
+
         return (
             <div>
                 <Navbar className="navbar" light expand="md">
@@ -42,18 +44,21 @@ class navbar extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink  href="/" >Home</NavLink>
+                                <NavLink href="/" >Home</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/create/">Create</NavLink>
                             </NavItem>
+                            {!loggedIn &&
                             <NavItem>
                                 <NavLink href="/login">Sign in</NavLink>
                             </NavItem>
+                            }
+                            {loggedIn &&
                             <NavItem>
-                                <NavLink href="/login" onClick={handleLogout(history)}>
-                                    Sign out</NavLink>
+                                <NavLink href="/login" onClick={this.logout}>Sign out</NavLink>
                             </NavItem>
+                            }
                         </Nav>
                     </Collapse>
                 </Navbar>

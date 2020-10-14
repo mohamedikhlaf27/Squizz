@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import './Register.css';
 import {Button, Input, Label, FormGroup} from "reactstrap";
-import {Link} from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 
@@ -11,7 +10,6 @@ class Register extends Component {
         super(props);
         this.state = {
             canSubmit: true,
-            registered: false,
             message: ""
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,16 +23,16 @@ class Register extends Component {
 
         const email = event.target.email.value;
         const password = event.target.password.value;
+        const repeatPassword = event.target.repeatPassword.value;
         const username = event.target.userName.value;
         const role = document.querySelector('input[name="radio"]:checked').value;
 
         let formData = new URLSearchParams();
         formData.append('email', email)
         formData.append('password', password);
+        formData.append('repeatPassword', repeatPassword);
         formData.append('username', username);
         formData.append('role', role);
-
-        console.log(email, password, username, role);
 
         fetch("http://localhost:8080/person/register", {
             method: 'POST',
@@ -81,6 +79,7 @@ class Register extends Component {
                         <Input type="email" id="email" className="form-control" placeholder="Email address"
                                required autoFocus> </Input>
                         <Input type="password" id="password" className="form-control" placeholder="Password" required> </Input>
+                        <Input type="password" id="repeatPassword" className="form-control" placeholder="Repeat password" required> </Input>
                         <Input type="text" id="userName" className="form-control" placeholder="Username" required> </Input>
 
                         <div>
@@ -89,13 +88,13 @@ class Register extends Component {
                             </Label>
                             <FormGroup check>
                                 <Label check>
-                                    <Input type="radio" id="radio" name="radio" value="true" checked="true"/>{' '}
+                                    <Input type="radio" id="radioTeacher" name="radio" value="true" checked={true}/>{' '}
                                     Teacher
                                 </Label>
                             </FormGroup>
                             <FormGroup check className="pb-2">
                                 <Label check>
-                                    <Input type="radio" id="radio" name="radio" value="false"/>{' '}
+                                    <Input type="radio" id="radioStudent" name="radio" value="false"/>{' '}
                                     Student
                                 </Label>
                             </FormGroup>
@@ -105,9 +104,9 @@ class Register extends Component {
 
                         <Button className="btn btn-lg btn-primary btn-block btn-signup" type="submit">Sign up
                         </Button>
-                        <div className={this.state.registered ? "registered" : "register-failed"}>
+                        <div>
                             <p>Already have a account?
-                                <a className="login"> <Link to="/login"> Sign in </Link></a>
+                                <a className="login" href={'/login'}> Sign in</a>
                             </p>
                         </div>
                     </div>
