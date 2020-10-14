@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import './Login.css';
 import {Button, Label, Input} from 'reactstrap';
-import {Link} from "react-router-dom";
+import Background from "../login/img/MicrosoftTeams-image (1).png"
 import { withRouter } from "react-router-dom";
 
 class Login extends Component {
-    handleChange;
     constructor(props) {
         super(props);
         this.state = {
@@ -69,7 +68,7 @@ class Login extends Component {
 
     render() {
         return(
-            <form className="form-signin" onSubmit={this.onLogin}>
+            <form className="sign-in" onSubmit={this.onLogin}>
                 <div className="container">
                     <div className="card card-container">
                         <div className="pb-2"><
@@ -82,7 +81,7 @@ class Login extends Component {
 
                         <div>{this.state.message}</div>
 
-                        <Button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in </Button>
+                        <Button className="btn btn-lg btn-primary btn-block btn-sign-in" type="submit">Sign in </Button>
                         <div>
                             <p>Don't have a account yet?
                                 <a className="register" href={'/register'}> Register.</a>
