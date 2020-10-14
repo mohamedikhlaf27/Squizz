@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './Login.css';
 import {Button, Label, Input} from 'reactstrap';
-import Background from "../login/img/MicrosoftTeams-image (1).png"
 import { withRouter } from "react-router-dom";
 
 class Login extends Component {
@@ -79,7 +78,7 @@ class Login extends Component {
                         <Input type="password" id="password" className="form-control" placeholder="Password"
                                required> </Input>
 
-                        <div>{this.state.message}</div>
+                        <div className="text-danger pb-2">{this.state.message}</div>
 
                         <Button className="btn btn-lg btn-primary btn-block btn-sign-in" type="submit">Sign in </Button>
                         <div>

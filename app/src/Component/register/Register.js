@@ -100,7 +100,7 @@ class Register extends Component {
                             </FormGroup>
                         </div>
 
-                        <div>{this.state.message}</div>
+                        <div className="text-danger pb-2">{this.state.message}</div>
 
                         <Button className="btn btn-lg btn-primary btn-block btn-signup" type="submit">Sign up
                         </Button>
