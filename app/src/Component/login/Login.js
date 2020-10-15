@@ -73,9 +73,9 @@ class Login extends Component {
                         <div className="pb-2"><
                             h4 id="Title">Sign in</h4>
                         </div>
-                        <Input type="email" id="email" className="form-control" placeholder="Email address"
+                        <Input type="email" id="email" className="form-control" placeholder="Email address" data-hj-allow
                                required autoFocus> </Input>
-                        <Input type="password" id="password" className="form-control" placeholder="Password"
+                        <Input type="password" id="password" className="form-control" placeholder="Password" data-hj-allow
                                required> </Input>
 
                         <div className="text-danger pb-2">{this.state.message}</div>

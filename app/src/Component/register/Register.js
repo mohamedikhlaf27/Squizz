@@ -76,10 +76,10 @@ class Register extends Component {
                         <div className= "pb-2"><
                             h4 id = "Title">Sign up</h4>
                         </div>
-                        <Input type="email" id="email" className="form-control" placeholder="Email address"
+                        <Input type="email" id="email" className="form-control" placeholder="Email address" data-hj-allow
                                required autoFocus> </Input>
-                        <Input type="password" id="password" className="form-control" placeholder="Password" required> </Input>
-                        <Input type="password" id="repeatPassword" className="form-control" placeholder="Repeat password" required> </Input>
+                        <Input type="password" id="password" className="form-control" placeholder="Password" required data-hj-allow> </Input>
+                        <Input type="password" id="repeatPassword" className="form-control" placeholder="Repeat password" required data-hj-allow> </Input>
                         <Input type="text" id="userName" className="form-control" placeholder="Username" required> </Input>
 
                         <div>
