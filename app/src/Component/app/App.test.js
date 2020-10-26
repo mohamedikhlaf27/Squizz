@@ -1,9 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import App from './App';
+import Login from "../login/Login";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("<App />", () => {
+  it("Renders <App /> component correctly", () => {
+    const { getByText } = render(<App />);
+    expect(getByText(/Squizz/i)).toBeInTheDocument();
+  });
 });

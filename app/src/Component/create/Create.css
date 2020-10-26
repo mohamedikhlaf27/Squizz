@@ -1,0 +1,46 @@
+.card-container.card {
+    max-width: 500px;
+    padding: 40px 40px;
+}
+.card-container{
+    margin: 0 auto 25px;
+}
+
+#addQuestion{
+    background-color: rgb(104, 145, 162);
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+}
+
+#addAnswer{
+    background-color: rgb(104, 145, 162);
+    padding: 0px;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    height: 25px;
+    width: 25px;
+}
+
+#addQuestion:hover,
+#addQuestion:active,
+#addQuestion:focus {
+    background-color: rgb(12, 97, 33);
+}
+
+#addAnswer:hover,
+#addAnswer:active,
+#addAnswer:focus {
+    background-color: rgb(12, 97, 33);
+}
+
+.titleLabel{
+    color: black;
+}
+
+h2{
+    color: rgb(104, 145, 162);
+}
+

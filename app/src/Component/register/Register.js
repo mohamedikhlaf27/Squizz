@@ -71,6 +71,7 @@ class Register extends Component {
     render() {
         return (
             <form className="form-signup" onSubmit={this.handleSubmit}>
+                <div className="empty"> </div>
                 <div className="container">
                     <div className="card card-container">
                         <div className= "pb-2"><

@@ -46,9 +46,9 @@ class navbar extends Component {
                             <NavItem>
                                 <NavLink href="/" >Home</NavLink>
                             </NavItem>
-                            {/*<NavItem>*/}
-                            {/*    <NavLink href="/">Create</NavLink>*/}
-                            {/*</NavItem>*/}
+                            <NavItem>
+                                <NavLink href="/create">Create</NavLink>
+                            </NavItem>
                             {!loggedIn &&
                             <NavItem>
                                 <NavLink href="/login">Sign in</NavLink>

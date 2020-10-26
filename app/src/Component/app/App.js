@@ -7,6 +7,7 @@ import Register from '../register/Register';
 import Login from '../login/Login';
 import Navbar from "../navbar/Navbar";
 import Home from "../home/Home";
+import Create from "../create/Create";
 
 class App extends Component {
     constructor(props) {
@@ -42,10 +43,10 @@ class App extends Component {
                     <div className="content" loginstatus={this.state.loggedIn}>
                         <Switch>
                             <Route path="/" exact component={Home} />
-                            <Route path="/login" exact component={Login}/>
-                            {/*<Route path="/login" exact>*/}
-                            {/*    <Login  onResult={loginData => {this.setState({loginData})}} />*/}
-                            {/*</Route>*/}
+                            <Route path="/create" exact component={Create}/>
+                            <Route path="/login" exact>
+                                <Login  onResult={loginData => {this.setState({loginData})}} />
+                            </Route>
                             <Route path="/register" exact component={Register} />
                         </Switch>
                     </div>
