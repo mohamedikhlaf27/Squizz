@@ -4,10 +4,10 @@ import Navbar from "../navbar/Navbar";
 class Home extends Component {
 
     render() {
-        return <div>
+        return <>
             <Navbar/>
             <h1>Home</h1>
-        </div>
+        </>
     }
 }
 
