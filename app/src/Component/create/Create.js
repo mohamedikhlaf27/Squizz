@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from "../navbar/Navbar";
 import {Button, Input} from "reactstrap";
 import './Create.css';
-import Label from "reactstrap/es/Label";
+//import Label from "reactstrap/es/Label";
 
 class Create extends Component {
     state = {
@@ -37,7 +37,7 @@ class Create extends Component {
         );
 
         const AnswerInput = props => <div className="form-check-inline pt-1">
-            <Label className="pr-2">{props.number + 1}: </Label>
+            <label className="pr-2">{props.number + 1}: </label>
             <Input type="text" id="AnswerInput" className="form-control" data-hj-allow
                    required> </Input>
         </div>
@@ -62,12 +62,12 @@ class Create extends Component {
         const QuestionsForm = props => <div className="card card-container pt-5">
 
             <div className="form-check-inline">
-                <Label className="pr-2">Question{props.number + 2}: </Label>
+                <label className="pr-2">Question{props.number + 2}: </label>
                 <Input type="text" id="QuestionInput" className="form-control" data-hj-allow
                        required autoFocus> </Input>
             </div>
 
-            <Label className="pt-1">Answers</Label>
+            <label className="pt-1">Answers</label>
 
             {Answers}
 
@@ -88,7 +88,7 @@ class Create extends Component {
                     <h2 className="pt-5"> Create a quiz</h2>
 
                     <div className="pt-4 pb-3 form-check-inline" id="Title">
-                        <Label className="pr-2 titleLabel">Title: </Label>
+                        <label className="pr-2 titleLabel">Title: </label>
                         <Input type="text" id="title" className="form-control" data-hj-allow
                                required autoFocus> </Input>
                     </div>
@@ -96,12 +96,12 @@ class Create extends Component {
                     <div className="card card-container pt-5">
 
                         <div className="form-check-inline">
-                            <Label className="pr-2">Question1: </Label>
+                            <label className="pr-2">Question1: </label>
                             <Input type="text" id="QuestionInput" className="form-control" data-hj-allow
                                    required > </Input>
                         </div>
 
-                        <Label className="pt-1">Answers</Label>
+                        <label className="pt-1">Answers</label>
 
                         {Answers}
 
