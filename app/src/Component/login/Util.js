@@ -1,7 +1,8 @@
 import React from 'react';
 import './Login.css';
+import axios from 'axios';
 
-export const FetchData = (event, setCanLogin, setLoggedIn, setMessage, loginRequested) => {
+export const FetchLogin = (event, setCanLogin, setLoggedIn, setMessage, loginRequested) => {
 
     event.preventDefault();
     const email = event.target.email.value;
@@ -11,43 +12,27 @@ export const FetchData = (event, setCanLogin, setLoggedIn, setMessage, loginRequ
     formData.append('email', email)
     formData.append('password', password);
 
-    return fetch("http://localhost:8080/person/login", {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData
-    })
-        .then(result => {
-            if (result.status === 200) {
-                return result.json()
-            } else {
-                return Promise.reject(result)
-            }
-        })
+    return axios
+        .post("http://localhost:8080/person/login", formData)
+        .then(response => response.status === 200 ? response : Promise.reject)
+        .then(response => {
+            console.log(response);
+            localStorage.setItem('Squizz-loggedIn', true);
+            setCanLogin(false);
+            setLoggedIn(true);
+            setMessage(response.data.message);
+            loginRequested();
 
-        .then(data => {
-            if (data) {
-                console.log(data);
-                // localStorage.setItem('Squizz-loggedIn', true);
-                // setCanLogin(true);
-                // setLoggedIn(true);
-                // setMessage(data.message);
-                //loginRequested();
-            }
+            return response.data;
         })
-        .catch(result => result.json())
-        .then(data => {
-            if (data) {
-                console.log("error");
-                // console.log(error.data);
-                // localStorage.setItem('Squizz-loggedIn', false);
-                // setCanLogin(false);
-                // setLoggedIn(true);
-                // setMessage(error.data.message);
-                //return error.data;
-            }
-        })
+        .catch(error => {
+            console.log(error.response.data);
+            localStorage.setItem('Squizz-loggedIn', false);
+            setCanLogin(true);
+            setLoggedIn(false);
+            setMessage(error.response.data.message);
+
+            return error.response.data;
+        });
 }
 

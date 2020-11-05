@@ -1,8 +1,7 @@
 import React from 'react';
 import './Login.css';
 import {Button} from 'reactstrap';
-import {FetchData} from "./Util";
-
+import {FetchLogin} from "./Util";
 
 export const LoginForm = ({loginRequested}) => {
 
@@ -11,7 +10,7 @@ export const LoginForm = ({loginRequested}) => {
     const [message, setMessage] = React.useState("");
 
     const handleSubmit = (event) => {
-        FetchData(event, setCanLogin, setLoggedIn, setMessage, loginRequested).then(r => message);
+        FetchLogin(event, setCanLogin, setLoggedIn, setMessage, loginRequested).then(r => message);
     }
 
         return(
@@ -41,5 +40,4 @@ export const LoginForm = ({loginRequested}) => {
             </form>
         )
 }
-
 export default LoginForm;

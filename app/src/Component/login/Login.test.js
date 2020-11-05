@@ -1,7 +1,9 @@
 import React from 'react';
 import {fireEvent, render} from "@testing-library/react";
 import {LoginForm} from "./LoginForm";
-import {FetchData} from "./Util";
+import {FetchLogin} from "./Util";
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
 
 describe("All Test" , () => {
@@ -32,10 +34,14 @@ describe("All Test" , () => {
 
     describe("with correct required fields" , () => {
         //test values
-        const det = {
+        let mock = new MockAdapter(axios);
+
+        const Data = {
             message: "Login succeeded",
             jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlL…TgzfQ.cALHz3kp7PftVtUtIEzcKYSWoiq-0gW85eAOBeZoXaQ"
         }
+
+        mock.onPost("http://localhost:8080/person/login").reply(200, Data);
 
         const email= "test1@exapmle.com";
         const password= "Test1234&";
@@ -46,41 +52,24 @@ describe("All Test" , () => {
                 password: password
             }
         };
-        const setCanLogin = true;
-        const setLoggedIn = false;
+        const setCanLogin = jest.fn();
+        const setLoggedIn = jest.fn();
         const setMessage = jest.fn();
         const loginRequestedMock = jest.fn();
 
-        it("check fetch has been called", () => {
+        it("gives fitting message",  () => {
 
-            //fetch.mockResponseOnce(JSON.stringify(data));
-            //
-            // expect(fetch).toHaveBeenCalledTimes(0);
-
-        })
-
-        it("gives fitting message", async () => {
-
-            fetch.mockResponseOnce(JSON.stringify(det));
-
-            return FetchData(event, setCanLogin, setLoggedIn, setMessage, loginRequestedMock).then(data =>{
-                console.log("niks");
-                console.log(data);
-                expect(data.message).toBe("Login succeeded");
+            return FetchLogin(event, setCanLogin, setLoggedIn, setMessage, loginRequestedMock).then(data =>{
+                expect(data.message).toBe("Login succeeded")
             })
-
         })
 
         it("loginRequested has been called", () => {
 
-            // const loginRequestedMock = jest.fn();
-            //
-            // return FetchData(email, password, loginRequestedMock).then(data =>{
-            //     expect(loginRequestedMock).toHaveBeenCalled();
-            // })
-
+            return FetchLogin(event, setCanLogin, setLoggedIn, setMessage, loginRequestedMock).then(data =>{
+                expect(loginRequestedMock).toHaveBeenCalled();
+            })
 
         })
     })
-
 })
