@@ -67,3 +67,17 @@
     color: rgb(104, 145, 162);
 }
 
+.passIcon{
+    position: relative;
+    height: 50px;
+}
+
+.icon{
+    position: absolute;
+    left: auto;
+    right: 10px;
+    text-indent: 32px;
+    top: 10px;
+}
+
+

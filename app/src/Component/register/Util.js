@@ -26,7 +26,7 @@ export const FetchRegister = (event, setMessage, canSubmit, registerRequested ) 
 
             canSubmit(true);
             setMessage(response.data.message)
-            registerRequested();
+            //registerRequested();
 
             return response.data;
         })

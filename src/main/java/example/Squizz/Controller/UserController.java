@@ -9,12 +9,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
@@ -39,7 +34,7 @@ public class UserController {
 
     //register
     @PostMapping("/register")
-    public @ResponseBody String register(@RequestParam String email,  @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword,
+    public @ResponseBody String register(@RequestParam String email, @RequestParam String username, @RequestParam String password, @RequestParam String repeatPassword,
                                          boolean role, HttpServletResponse response) throws NoSuchAlgorithmException {
 
         Util util = new Util();
@@ -49,27 +44,23 @@ public class UserController {
         Person dBAccount = personRepository.findPersonByEmail(email);
 
         if(dBAccount != null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "This email in already in use.");
+            UnauthorizedAccess(response, data, "This email in already in use.");
             return new JSONObject(data).toString();
         }
 
         // Check if user data is valid
         if(!util.EmailValidator(email)) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "Email is not correct.");
+            UnauthorizedAccess(response, data, "Email is not correct.");
             return new JSONObject(data).toString();
         }
 
         if(!repeatPassword.equals(password)){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "Password doesn't match.");
+            UnauthorizedAccess(response, data, "Password doesn't match.");
             return new JSONObject(data).toString();
         }
 
         if(!util.PasswordValidator(password)){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "Password must contain at least one digit, special character, uppercase, " +
+            UnauthorizedAccess(response, data, "Password must contain at least one digit, special character, uppercase, " +
                     "lowercase and be minimun of 8 characters.");
             return new JSONObject(data).toString();
         }
@@ -92,12 +83,13 @@ public class UserController {
     public @ResponseBody String login(@RequestParam String email, @RequestParam String password, HttpServletResponse response) throws NoSuchAlgorithmException {
         HashMap<String, Object> data = new HashMap<>();
 
+        String loginRequest = null;
+
         // Get user's hash by email from database
         Person user = personRepository.findPersonByEmail(email);
         if(user == null){
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "Email or password is incorrect.");
-            return new JSONObject(data).toString();
+            UnauthorizedAccess(response, data, "Email or password is incorrect.");
+            loginRequest =  new JSONObject(data).toString();
         }
         String databaseHash = user.getPassword();
 
@@ -112,9 +104,14 @@ public class UserController {
             data.put("message", "Login succeeded.");
             data.put("jwt", jwt);
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            data.put("message", "Email or password is incorrect.");
+            UnauthorizedAccess(response, data, "Email or password is incorrect.");
+            loginRequest =  new JSONObject(data).toString();
         }
-        return new JSONObject(data).toString();
+        return loginRequest;
+    }
+
+    private void UnauthorizedAccess(HttpServletResponse response, HashMap<String, Object> data, String message) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        data.put("message", message);
     }
 }

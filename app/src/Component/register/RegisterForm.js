@@ -2,6 +2,9 @@ import {Button, FormGroup, Input, Label} from "reactstrap";
 import React from "react";
 import {FetchRegister} from "./Util";
 
+import { FaRegEye } from 'react-icons/fa';
+import { FaRegEyeSlash } from 'react-icons/fa';
+
 
 export const RegisterForm = ({registerRequested}) => {
 
@@ -11,6 +14,17 @@ export const RegisterForm = ({registerRequested}) => {
     const handleSubmit = (event) => {
         FetchRegister(event, setMessage, setCanSubmit, registerRequested).then(r => message);
     }
+
+    const [passwordShown, setPasswordShown] = React.useState(false);
+    const [repeatPasswordShown, setRepeatPasswordShown] = React.useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordShown(!passwordShown);
+    };
+
+    const toggleRepeatPasswordVisibility = () => {
+        setRepeatPasswordShown(!repeatPasswordShown);
+    };
 
     return (
         <form data-testid="register-form" className="form-signup" onSubmit={handleSubmit}>
@@ -22,8 +36,33 @@ export const RegisterForm = ({registerRequested}) => {
                     </div>
                     <input type="email" id="email" className="form-control" placeholder="Email address" data-hj-allow
                            required autoFocus />
-                    <input type="password" id="password" className="form-control" placeholder="Password" required data-hj-allow />
-                    <input type="password" id="repeatPassword" className="form-control" placeholder="Repeat password" required data-hj-allow/>
+
+                    <div className="passIcon">
+                        <input type={passwordShown ? "text" : "password"} id="password" className="form-control" placeholder="Password" required data-hj-allow />
+
+                        <span onClick={togglePasswordVisibility} className="icon">
+                                <span>
+                                    {passwordShown ?
+                                        <FaRegEyeSlash classname= "customIcon"/>:
+                                        <FaRegEye classname= "customIcon"/>
+                                    }
+                                </span>
+                            </span>
+                    </div>
+
+                    <div className="passIcon">
+                        <input type={repeatPasswordShown ? "text" : "password"} id="repeatPassword" className="form-control" placeholder="Repeat password" required data-hj-allow/>
+
+                        <span onClick={toggleRepeatPasswordVisibility} className="icon">
+                                <span>
+                                    {repeatPasswordShown ?
+                                        <FaRegEyeSlash classname= "customIcon"/>:
+                                        <FaRegEye classname= "customIcon"/>
+                                    }
+                                </span>
+                            </span>
+                    </div>
+
                     <input type="text" name="userName" id="userName" className="form-control" placeholder="Username" required />
 
                     <div>

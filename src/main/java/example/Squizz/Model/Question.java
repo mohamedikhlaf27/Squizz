@@ -13,4 +13,12 @@ public @Data class Question {
 
     @OneToMany(fetch = FetchType.EAGER, cascade =CascadeType.ALL)
     private List<Choices> choices;
+
+    public Question() {}
+
+    public Question(int questionId, String title, List<Choices> choices) {
+        this.questionId = questionId;
+        this.title = title;
+        this.choices = choices;
+    }
 }

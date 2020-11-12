@@ -3,6 +3,10 @@ import './Login.css';
 import {Button} from 'reactstrap';
 import {FetchLogin} from "./Util";
 
+import { FaRegEye } from 'react-icons/fa';
+import { FaRegEyeSlash } from 'react-icons/fa';
+
+
 export const LoginForm = ({loginRequested}) => {
 
     const [canLogin, setCanLogin] = React.useState("");
@@ -13,7 +17,14 @@ export const LoginForm = ({loginRequested}) => {
         FetchLogin(event, setCanLogin, setLoggedIn, setMessage, loginRequested).then(r => message);
     }
 
+    const [passwordShown, setPasswordShown] = React.useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordShown(!passwordShown);
+    };
+
         return(
+
             <form data-testid="login-form" className="sign-in" onSubmit={handleSubmit}>
                 <div className="empty"> </div>
                 <div className="container">
@@ -22,11 +33,24 @@ export const LoginForm = ({loginRequested}) => {
                             h4 id="Title">Sign in</h4>
                         </div>
 
+
                         <input type="email" id="email" className="form-control" placeholder="Email address" data-hj-allow
                                required={true} autoFocus={true}/>
 
-                        <input type="password" id="password" className="form-control" placeholder="Password"
-                               required={true}  data-hj-allow />
+                        <div className="passIcon-login">
+                            <input type={passwordShown ? "text" : "password"} id="password" className="form-control" placeholder="Password"
+                                   required={true} data-hj-allow/>
+
+                            <span onClick={togglePasswordVisibility} className="icon-login">
+                                <span>
+                                    {passwordShown ?
+                                        <FaRegEyeSlash/>:
+                                        <FaRegEye/>
+                                    }
+                                </span>
+                            </span>
+                        </div>
+
                         <div className="text-danger pb-2">{message}</div>
 
                         <Button id="login-btn" className="btn btn-lg btn-primary btn-block btn-sign-in" type="submit">Sign in </Button>

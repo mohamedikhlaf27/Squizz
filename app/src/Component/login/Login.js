@@ -2,7 +2,7 @@ import React from 'react';
 import './Login.css';
 import { withRouter } from "react-router-dom";
 import { LoginForm }  from "./LoginForm";
-import {RegisterForm} from "../register/RegisterForm";
+import Navbar from "../navbar/Navbar";
 
 export class Login extends React.Component{
     constructor(props) {
@@ -15,8 +15,10 @@ export class Login extends React.Component{
     }
 
     render() {
-        return(
+        return(<>
+            <Navbar/>
             <LoginForm loginRequested={() => this.redirect()}/>
+            </>
         )
     }
 }

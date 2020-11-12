@@ -11,4 +11,14 @@ public @Data class Choices {
     private int choicesId;
     private String choice;
     private rightChoice rightChoice;
+
+    public Choices(){}
+
+    public Choices(int choicesId, String choice, rightChoice rightChoice){
+        this.choicesId = choicesId;
+        this.choice = choice;
+        this.rightChoice = rightChoice;
+    }
+
+
 }
