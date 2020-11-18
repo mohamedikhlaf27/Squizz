@@ -1,6 +1,8 @@
 #we use java
 language: java
+os: windows
 
+dist: xenial
 jdk: openjdk-14
 
 before_install:
