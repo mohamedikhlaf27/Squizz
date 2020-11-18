@@ -1,5 +1,4 @@
 #we use java
 language: java
 
-jdk:
--openjdk14
+jdk: openjdk-14
