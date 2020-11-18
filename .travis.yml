@@ -6,7 +6,7 @@ jdk: openjdk-14
 before_install:
   - chmod +x mvnw
   - sudo apt-get --allow-unauthenticated install openvpn
-- openssl aes-256-cbc -K $encrypted_key -iv $encrypted_iv
-  -in vpn-config.ovpn.enc -out vpn-config.ovpn -d
-- sudo openvpn --config vpn-config.ovpn &>>openvpn-client.log &
+  - openssl aes-256-cbc -K $encrypted_key -iv $encrypted_iv
+    -in vpn-config.ovpn.enc -out vpn-config.ovpn -d
+  - sudo openvpn --config vpn-config.ovpn &>>openvpn-client.log &
 
