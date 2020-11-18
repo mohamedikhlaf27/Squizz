@@ -82,6 +82,7 @@ public class UserController {
         // Save user to database
         Person user = new Person(email, username, hashedPassword, role, salt);
         personRepository.save(user);
+        //test
 
         data.put("message", "Registration succeeded.");
         return new JSONObject(data).toString();
